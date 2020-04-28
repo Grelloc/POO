@@ -1,5 +1,5 @@
 CC = g++
-CFLAGS=-pedantic -Wall -Werror -g #`pkg-config libxml-2.0 --cflags`
+CFLAGS=-pedantic -Wall -Werror -g
 RM = rm -fv
 
 

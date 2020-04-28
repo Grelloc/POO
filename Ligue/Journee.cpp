@@ -1,16 +1,16 @@
 #include "Journee.h"
 
-void Journee::free(){
-    for (Match m : _matchs){
+void Journee::free() {
+    for (Match m : _matchs) {
         m.free();
     }
 }
 
-void Journee::add_match(const Match & m){
+void Journee::add_match(const Match &m) {
     _matchs.push_back(m);
 }
 
-int Journee::getNumber() const{
+int Journee::getNumber() const {
     return _number;
 }
 
