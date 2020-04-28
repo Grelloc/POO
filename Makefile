@@ -7,8 +7,7 @@ RM = rm -fv
 
 all: main.out
 %.o: %.cpp %.h
-	$(CC) $(CFLAGS) -cpp -o $@ $<
-main.out: main.o ligue.o journee.o match.o buteur.o equipes.o equipe.o joueurs.o joueur.o
+main.out: Joueur.o JoueursManager.o Equipe.o  EquipesManager.o Buteur.o Match.o Journee.o Ligue.o Parse.o main.o
 	$(CC) $(CFLAGS) -o $@ $^
 clean:
 	$(RM) *.o *.out
