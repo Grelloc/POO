@@ -5,9 +5,10 @@ RM = rm -fv
 
 .PHONY: all clean
 
-all: main.out
+all: foot
 %.o: %.cpp %.h
-main.out: Joueur.o JoueursManager.o Equipe.o  EquipesManager.o Buteur.o Match.o Journee.o Ligue.o Parse.o main.o
+	$(CC) $(CFLAGS) -c -o $@ $<
+foot: Joueur.o JoueursManager.o Equipe.o  EquipesManager.o Buteur.o Match.o Journee.o Ligue.o main.o
 	$(CC) $(CFLAGS) -o $@ $^
 clean:
-	$(RM) *.o *.out
+	$(RM) *.o foot
