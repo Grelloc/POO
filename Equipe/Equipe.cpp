@@ -9,14 +9,7 @@ Equipe::Equipe(const string &name) {
     _butsPris = 0;
 }
 
-void Equipe::free() {
-    for (Joueur *j : _joueurs) {
-        delete j;
-    }
-}
-
-
-int Equipe::points() {
+int Equipe::points() const{
     return getvictoires() * 3 + getnuls();
 }
 
@@ -50,4 +43,26 @@ void Equipe::nul() {
 
 string Equipe::display() const {
     return _name;
+}
+
+double Equipe::get(const char &sort) const{
+    switch (sort) {
+        case 'p':
+            return points();
+        case 'v':
+            return _victoires;
+        case 'd':
+            return _defaites;
+        case 'n':
+            return _nuls;
+        case 'm':
+            return _butsMis;
+        case 'e':
+            return _butsPris;
+        case 'g':
+            return goalAverage();
+        default:
+            break;
+    }
+    return 1;
 }

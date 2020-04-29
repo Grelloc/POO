@@ -1,12 +1,5 @@
 #include "Match.h"
 
-void Match::free() {
-    _equipeA->free();
-    _equipeB->free();
-    delete _equipeA;
-    delete _equipeB;
-}
-
 int Match::getNumber() const {
     return _number;
 }
@@ -43,7 +36,7 @@ void Match::majScore() {
 
 string Match::displayA() const {
     string message;
-    if (_buteursA.size() > 0) {
+    if (!_buteursA.empty()) {
         message.append("\tButeur(s) ").append(_equipeA->display()).append(" :");
         for (Buteur B : _buteursA) {
             message.append(" ").append(B.display());
@@ -55,7 +48,7 @@ string Match::displayA() const {
 
 string Match::displayB() const {
     string message;
-    if (_buteursB.size() > 0) {
+    if (!_buteursB.empty()) {
         message.append("\tButeur(s) ").append(_equipeB->display()).append(" :");
         for (Buteur B : _buteursB) {
             message.append(" ").append(B.display());

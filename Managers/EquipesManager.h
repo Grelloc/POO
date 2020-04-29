@@ -10,16 +10,18 @@ private :
 
     EquipesManager();
 
+    void _sort(const char &type);
 public :
-    static EquipesManager *getInstance();
+    ~EquipesManager();
 
-    void trier(char sort);
+    static EquipesManager *getInstance();
 
     void add_team(Equipe *e);
 
-    string display(int nDefined, unsigned n, char sort);
+    string display(int nDefined, unsigned n, int eDefined, char sort);
 
-    int exist(string name) const;
+    bool exist(const string &name) const;
+    Equipe* get_team(const string &name) const;
 };
 
 #endif

@@ -9,19 +9,22 @@ class JoueursManager {
 private :
     vector<Joueur *> _joueurs;
     static JoueursManager *_instance;
-
     JoueursManager();
+    static bool CSC(const string &name);
 
+    void _sort(const char &sort);
 public :
-    static JoueursManager *getInstance();
 
-    void trier(char sort);
+    ~JoueursManager();
+    static JoueursManager *getInstance();
 
     void add_player(Joueur *j);
 
     bool exist(const string &name) const;
 
-    string display(int nDefined, unsigned n, char sort);
+    string display(int nDefined, unsigned n, int jDefined, char sort);
+
+    Joueur *get_player(const string &name) const;
 };
 
 

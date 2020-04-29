@@ -27,6 +27,8 @@ public :
     int buts() const;
 
     string display() const;
+
+    double get(const char &sort) const;
 };
 
 

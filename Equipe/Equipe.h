@@ -25,11 +25,9 @@ private :
 public :
     Equipe(const string &name);
 
-    void free();
-
     void add_player(Joueur *j);
 
-    int points();
+    int points() const;
 
     double goalAverage() const;
 
@@ -44,6 +42,8 @@ public :
     void nul();
 
     string display() const;
+
+    double get(const char &sort) const;
 };
 
 #endif

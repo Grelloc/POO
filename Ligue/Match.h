@@ -22,8 +22,6 @@ public:
     Match(int number, Equipe *equipeA, Equipe *equipeB, int scoreA, int scoreB) :
             _number(number), _equipeA(equipeA), _equipeB(equipeB), _scoreA(scoreA), _scoreB(scoreB) { gagne(); }
 
-    void free();
-
     int getNumber() const;
 
     void gagne();

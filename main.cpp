@@ -35,31 +35,10 @@ char eArgument(string e) {
 }
 
 char jArgument(string j) {
-    if (j.compare("buts")) {
+    if (j =="buts") {
         return 'b';
     }
     USAGE();
-}
-
-
-Ligue pourLesTest(int n) {
-    Joueur *j1 = new Joueur("didier"), *j2 = new Joueur("le"), *j3 = new Joueur("le"), *j4 = new Joueur("luck");
-    Buteur b1(j1, 10), b2(j2, 20), b3(j3, 30), b4(j4, 30);
-    Equipe *A = new Equipe("Monaco"), *B = new Equipe("OM");
-    Match m(1, A, B, 3, 1);
-    Journee J(n);
-    Ligue L;
-    m.add_buteurA(b1);
-    m.add_buteurA(b2);
-    m.add_buteurB(b3);
-    m.add_buteurA(b4);
-    A->add_player(j1);
-    A->add_player(j2);
-    A->add_player(j4);
-    B->add_player(j3);
-    J.add_match(m);
-    L.add_journee(J);
-    return L;
 }
 
 int main(int argc, char *const argv[]) {
@@ -67,7 +46,8 @@ int main(int argc, char *const argv[]) {
     char opt, j, e;
     char *repertory;
     unsigned n = 0;
-    int temp = 0, dDefined = 0, nDefined = 0;
+    int temp = 0;
+    bool dDefined = false, nDefined = false, jDefined =false, eDefined =false;
     while ((opt = getopt(argc, argv, "d:j:e:n:")) != -1) {
         switch (opt) {
             case 'd':
@@ -76,9 +56,11 @@ int main(int argc, char *const argv[]) {
                 break;
             case 'j':
                 j = jArgument(optarg);
+                jDefined = true;
                 break;
             case 'e':
                 e = eArgument(optarg);
+                eDefined = true;
                 break;
             case 'n':
                 temp = atoi(optarg);
@@ -87,7 +69,7 @@ int main(int argc, char *const argv[]) {
                 } else {
                     n = temp;
                 }
-                nDefined = 1;
+                nDefined = true;
                 break;
             default:
                 USAGE();
@@ -97,13 +79,7 @@ int main(int argc, char *const argv[]) {
     if (dDefined == 0) {
         USAGE();
     }
-    //lance le parse avec d
-    //recup les resultats
-    //et les traite
-    /*L = pourLesTest(10);
-    cout << L.display() << endl << EquipesManager::getInstance()->display(nDefined, n, e) << endl
-         << JoueursManager::getInstance()->display(nDefined, n, j);
-    L.free();*/
     cout << "list files in [" << repertory << "]" << endl;
-    Parser::parseAllFile(repertory);
+    L = Parser::parseAllFile(repertory);
+    cout << JoueursManager::getInstance()->display(nDefined, n,jDefined ,j) << EquipesManager::getInstance()->display(nDefined, n, eDefined, e) << L.display();
 }

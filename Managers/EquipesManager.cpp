@@ -7,6 +7,12 @@ EquipesManager *EquipesManager::_instance = nullptr;
 
 EquipesManager::EquipesManager() = default;
 
+EquipesManager::~EquipesManager() {
+    for (Equipe *team : _equipes){
+        delete team;
+    }
+}
+
 
 EquipesManager *EquipesManager::getInstance() {
     if (_instance == nullptr) {
@@ -19,16 +25,16 @@ void EquipesManager::add_team(Equipe *e) {
     _equipes.push_back(e);
 }
 
-void EquipesManager::trier(char type) {
+void EquipesManager::_sort(const char &type) {
     switch (type) {
         case 'p':
             sort(_equipes.begin(), _equipes.end(), [](Equipe *T, Equipe *T2) {
-                return T->points() < T2->points();
+                return T->points() > T2->points();
             });
             break;
         case 'v':
             sort(_equipes.begin(), _equipes.end(), [](Equipe *T, Equipe *T2) {
-                return T->getvictoires() < T2->getvictoires();
+                return T->getvictoires() > T2->getvictoires();
             });
             break;
         case 'd':
@@ -38,12 +44,12 @@ void EquipesManager::trier(char type) {
             break;
         case 'n':
             sort(_equipes.begin(), _equipes.end(), [](Equipe *T, Equipe *T2) {
-                return T->getnuls() < T2->getnuls();
+                return T->getnuls() > T2->getnuls();
             });
             break;
         case 'm':
             sort(_equipes.begin(), _equipes.end(), [](Equipe *T, Equipe *T2) {
-                return T->getbutsMis() < T2->getbutsMis();
+                return T->getbutsMis() > T2->getbutsMis();
             });
             break;
         case 'e':
@@ -53,7 +59,7 @@ void EquipesManager::trier(char type) {
             break;
         case 'g':
             sort(_equipes.begin(), _equipes.end(), [](Equipe *T, Equipe *T2) {
-                return T->goalAverage() < T2->goalAverage();
+                return T->goalAverage() > T2->goalAverage();
             });
             break;
         default:
@@ -64,29 +70,49 @@ void EquipesManager::trier(char type) {
     }
 }
 
-string EquipesManager::display(int nDefined, unsigned n, char sort) {
+string EquipesManager::display(int nDefined, unsigned n, int eDefined, char sort) {
     string message;
-    trier(sort);
+    _sort(sort);
     message.append("Liste des equipes :\n");
-    if (nDefined == 0) {
+    if (nDefined == 0 || n > _equipes.size()) {
         for (Equipe *T : _equipes) {
             message.append(" ").append(T->display());
         }
     } else {
-        unsigned k = n < _equipes.size() ? n : _equipes.size();
-        for (unsigned i = 0; i < k; i++) {
+        unsigned i;
+        for (i = 0; i < n; i++) {
             message.append(" ").append(_equipes[i]->display());
+        }
+        if (eDefined) {
+            while (i < _equipes.size() && _equipes[n - 1]->get(sort) == _equipes[i]->get(sort)) {
+                message.append(" ").append(_equipes[i]->display());
+                i++;
+            }
         }
     }
     message.append("\n");
     return message;
 }
 
-int EquipesManager::exist(string name) const {
-    unsigned k = 0;
-    while (k < _equipes.size() && name.compare(_equipes[k]->getname())) {
-        k++;
+bool EquipesManager::exist(const string &name) const {
+    for (const Equipe *team : _equipes) {
+        if (team->getname() == name) {
+            return true;
+        }
     }
-    return k < _equipes.size();
+    return false;
 }
 
+Equipe *EquipesManager::get_team(const string &name) const {
+    if (exist(name)) {
+        for (Equipe *team : _equipes) {
+            if (team->getname() == name) {
+                return team;
+            }
+        }
+    } else {
+        auto *a = new Equipe(name);
+        _instance->add_team(a);
+        return a;
+    }
+}

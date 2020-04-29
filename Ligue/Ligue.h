@@ -6,12 +6,14 @@
 class Ligue {
 private:
     vector<Journee> _journees;
+
+    void _sort();
+
 public:
-    void free();
 
     void add_journee(const Journee &j);
 
-    string display() const;
+    string display();
 };
 
 

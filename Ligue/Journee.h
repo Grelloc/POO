@@ -7,16 +7,18 @@ class Journee {
 private:
     vector<Match> _matchs;
     int _number;
-public:
-    Journee(int n) : _number(n) {}
 
-    void free();
+    void _sort();
+
+public:
+
+    Journee(int n) : _number(n) {}
 
     void add_match(const Match &m);
 
     int getNumber() const;
 
-    string display() const;
+    string display();
 };
 
 #endif
