@@ -8,8 +8,8 @@ EquipesManager *EquipesManager::_instance = nullptr;
 EquipesManager::EquipesManager() = default;
 
 
-EquipesManager* EquipesManager::getInstance() {
-    if (_instance ==nullptr){
+EquipesManager *EquipesManager::getInstance() {
+    if (_instance == nullptr) {
         _instance = new EquipesManager();
     }
     return _instance;
@@ -82,7 +82,7 @@ string EquipesManager::display(int nDefined, unsigned n, char sort) {
     return message;
 }
 
-int EquipesManager::exist(string name) const{
+int EquipesManager::exist(string name) const {
     unsigned k = 0;
     while (k < _equipes.size() && name.compare(_equipes[k]->getname())) {
         k++;

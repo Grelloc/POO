@@ -1,5 +1,3 @@
-#include "Managers/JoueursManager.h"
-#include "Managers/EquipesManager.h"
 #include "Ligue/Ligue.h"
 #include "Infra/Parser.h"
 
@@ -59,28 +57,22 @@ Ligue pourLesTest(int n) {
     A->add_player(j2);
     A->add_player(j4);
     B->add_player(j3);
-    JoueursManager::getInstance()->add_player(j1);
-    JoueursManager::getInstance()->add_player(j2);
-    JoueursManager::getInstance()->add_player(j3);
-    JoueursManager::getInstance()->add_player(j4);
     J.add_match(m);
     L.add_journee(J);
-    EquipesManager::getInstance()->add_team(A);
-    EquipesManager::getInstance()->add_team(B);
     return L;
 }
 
 int main(int argc, char *const argv[]) {
     Ligue L;
-    char opt, c, j, e;
-    string d;
+    char opt, j, e;
+    char *repertory;
     unsigned n = 0;
     int temp = 0, dDefined = 0, nDefined = 0;
     while ((opt = getopt(argc, argv, "d:j:e:n:")) != -1) {
         switch (opt) {
             case 'd':
                 dDefined = 1;
-                d = optarg;
+                repertory = optarg;
                 break;
             case 'j':
                 j = jArgument(optarg);
@@ -108,7 +100,10 @@ int main(int argc, char *const argv[]) {
     //lance le parse avec d
     //recup les resultats
     //et les traite
-    L = pourLesTest(10);
-    cout << L.display() << endl << EquipesManager::getInstance()->display(nDefined, n, e) << endl << JoueursManager::getInstance()->display(nDefined, n, j);
-    L.free();
+    /*L = pourLesTest(10);
+    cout << L.display() << endl << EquipesManager::getInstance()->display(nDefined, n, e) << endl
+         << JoueursManager::getInstance()->display(nDefined, n, j);
+    L.free();*/
+    cout << "list files in [" << repertory << "]" << endl;
+    Parser::parseAllFile(repertory);
 }

@@ -26,7 +26,7 @@ public :
 
     int buts() const;
 
-    string display();
+    string display() const;
 };
 
 

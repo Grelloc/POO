@@ -12,7 +12,7 @@ void Ligue::add_journee(const Journee &j) {
 
 string Ligue::display() const {
     string message = "Liste des matchs :\n\n";
-    for (Journee j : _journees) {
+    for (const Journee &j : _journees) {
         message.append(j.display());
     }
     return message;

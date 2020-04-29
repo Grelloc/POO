@@ -8,8 +8,8 @@ JoueursManager *JoueursManager::_instance = nullptr;
 JoueursManager::JoueursManager() = default;
 
 
-JoueursManager* JoueursManager::getInstance() {
-    if (_instance ==nullptr){
+JoueursManager *JoueursManager::getInstance() {
+    if (_instance == nullptr) {
         _instance = new JoueursManager();
     }
     return _instance;

@@ -11,7 +11,7 @@ private :
     EquipesManager();
 
 public :
-    static EquipesManager* getInstance();
+    static EquipesManager *getInstance();
 
     void trier(char sort);
 

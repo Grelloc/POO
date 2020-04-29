@@ -1,9 +1,7 @@
 #include "Equipe.h"
 
-//_joueurs.size(); Pour savoir le nombre de joueurs dans l'Equipe
-
-Equipe::Equipe(const string n) {
-    _name = n;
+Equipe::Equipe(const string &name) {
+    _name = name;
     _victoires = 0;
     _defaites = 0;
     _nuls = 0;
@@ -26,22 +24,8 @@ void Equipe::add_player(Joueur *j) {
     _joueurs.push_back(j);
 }
 
-const double Equipe::goalAverage() {
+double Equipe::goalAverage() const {
     return getbutsMis() / getbutsPris();
-}
-
-
-int Equipe::nmatch() {
-    return getvictoires() + getdefaites() + getnuls();
-}
-
-
-const int Equipe::exist(string name) {
-    unsigned k = 0;
-    while (k < _joueurs.size() && name.compare(_joueurs[k]->getname())) {
-        k++;
-    }
-    return k < _joueurs.size();
 }
 
 void Equipe::aPris(int &n) {

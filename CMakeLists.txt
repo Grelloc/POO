@@ -7,6 +7,7 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra")
 add_executable(foot
         Equipe/Equipe.cpp
         Equipe/Joueur.cpp
+        Infra/Parser.cpp
         Managers/EquipesManager.cpp
         Managers/JoueursManager.cpp
         Ligue/Buteur.cpp

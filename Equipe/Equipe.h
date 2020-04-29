@@ -3,10 +3,11 @@
 
 #include "Joueur.h"
 
+
 using namespace std;
 
 #define GetMacro(name, type) public :\
-                                    const type get##name(){ \
+                                    type get##name() const{ \
                                         return _##name; \
                                     }\
                                     private:\
@@ -22,7 +23,7 @@ GetMacro(nuls, int)
 private :
     vector<Joueur *> _joueurs;
 public :
-    Equipe(const string name);
+    Equipe(const string &name);
 
     void free();
 
@@ -30,9 +31,7 @@ public :
 
     int points();
 
-    const double goalAverage();
-
-    const int exist(string name);
+    double goalAverage() const;
 
     void aPris(int &n);
 
@@ -43,8 +42,6 @@ public :
     void defaite();
 
     void nul();
-
-    int nmatch();
 
     string display() const;
 };
