@@ -4,7 +4,6 @@ using namespace std;
 
 TeamManager *TeamManager::_instance = nullptr;
 
-
 TeamManager::TeamManager() = default;
 
 TeamManager::~TeamManager() {
@@ -12,7 +11,6 @@ TeamManager::~TeamManager() {
         delete team;
     }
 }
-
 
 TeamManager *TeamManager::getInstance() {
     if (_instance == nullptr) {

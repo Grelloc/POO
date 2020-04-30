@@ -1,7 +1,7 @@
 #ifndef PlayerManager_h
 #define PlayerManager_h
 
-#include "../Equipe/Player.h"
+#include "../Team/Player.h"
 #include "TeamManager.h"
 
 using namespace std;

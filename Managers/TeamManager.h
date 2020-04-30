@@ -1,7 +1,7 @@
 #ifndef TeamManager_h
 #define TeamManager_h
 
-#include "../Equipe/Team.h"
+#include "../Team/Team.h"
 
 class TeamManager {
 private :

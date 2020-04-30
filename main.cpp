@@ -1,4 +1,4 @@
-#include "Ligue/League.h"
+#include "League/League.h"
 #include "Infra/Parser.h"
 
 
@@ -9,26 +9,26 @@ using namespace std;
   exit(1) \
 )
 
-char eArgument(string e) {
-    if (e.compare("points")) {
+char eArgument(string argument) {
+    if (argument.compare("points")) {
         return 'p';
     }
-    if (e.compare("victoires")) {
+    if (argument.compare("victoires")) {
         return 'v';
     }
-    if (e.compare("defaites")) {
+    if (argument.compare("defaites")) {
         return 'd';
     }
-    if (e.compare("nuls")) {
+    if (argument.compare("nuls")) {
         return 'n';
     }
-    if (e.compare("attaque")) {
+    if (argument.compare("attaque")) {
         return 'm';
     }
-    if (e.compare("defense")) {
+    if (argument.compare("defense")) {
         return 'e';
     }
-    if (e.compare("goalaverage")) {
+    if (argument.compare("goalaverage")) {
         return 'g';
     }
     USAGE();
@@ -47,7 +47,7 @@ char jArgument(string j) {
 int main(int argc, char *const argv[]) {
     League L;
     char opt, j, e;
-    char *depository;
+    string depository;
     unsigned n = 0;
     int temp = 0;
     bool dDefined = false, nDefined = false, jDefined = false, eDefined = false;
@@ -66,7 +66,7 @@ int main(int argc, char *const argv[]) {
                 eDefined = true;
                 break;
             case 'n':
-                temp = atoi(optarg);
+                temp = stoi(optarg);
                 if (temp < 0) {
                     USAGE();
                 } else {
@@ -76,13 +76,13 @@ int main(int argc, char *const argv[]) {
                 break;
             default:
                 USAGE();
-                break;
         }
     }
     if (!dDefined) {
         USAGE();
     }
     L = Parser::parseAllFile(depository);
-    cout << PlayerManager::getInstance()->display(nDefined, n, jDefined, j)
-         << TeamManager::getInstance()->display(nDefined, n, eDefined, e) << L.display();
+    cout << TeamManager::getInstance()->display(nDefined, n, eDefined, e)
+         << PlayerManager::getInstance()->display(nDefined, n, jDefined, j)
+         << L.display();
 }

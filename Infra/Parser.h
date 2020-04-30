@@ -6,7 +6,7 @@
 #include <regex>
 #include "../Managers/TeamManager.h"
 #include "../Managers/PlayerManager.h"
-#include "../Ligue/League.h"
+#include "../League/League.h"
 
 using namespace std;
 

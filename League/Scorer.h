@@ -1,7 +1,7 @@
 #ifndef Scorer_h
 #define Scorer_h
 
-#include "../Equipe/Player.h"
+#include "../Team/Player.h"
 
 using namespace std;
 

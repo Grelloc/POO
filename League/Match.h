@@ -1,7 +1,7 @@
 #ifndef match_h
 #define match_h
 
-#include "../Equipe/Team.h"
+#include "../Team/Team.h"
 #include "Scorer.h"
 
 class Match {

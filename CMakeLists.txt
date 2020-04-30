@@ -5,15 +5,15 @@ set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -Wall -Wextra -pedantic-error
 #programme principal
 
 add_executable(foot
-        Equipe/Team.cpp
-        Equipe/Player.cpp
+        Team/Team.cpp
+        Team/Player.cpp
         Infra/Parser.cpp
         Managers/TeamManager.cpp
         Managers/PlayerManager.cpp
-        Ligue/Scorer.cpp
-        Ligue/Day.cpp
-        Ligue/League.cpp
-        Ligue/Match.cpp
+        League/Scorer.cpp
+        League/Day.cpp
+        League/League.cpp
+        League/Match.cpp
         main.cpp)
 target_link_libraries(foot)
 
