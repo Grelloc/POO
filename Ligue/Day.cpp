@@ -1,24 +1,24 @@
-#include "Journee.h"
+#include "Day.h"
 
 
-void Journee::add_match(const Match &m) {
-    _matchs.push_back(m);
+void Day::add_match(const Match &m) {
+    _matches.push_back(m);
 }
 
-int Journee::getNumber() const {
+int Day::getNumber() const {
     return _number;
 }
 
-void Journee::_sort() {
-    sort(_matchs.begin(), _matchs.end(), [](Match &M, Match &M2) {
+void Day::_sort() {
+    sort(_matches.begin(), _matches.end(), [](Match &M, Match &M2) {
         return M.getNumber() < M2.getNumber();
     });
 }
 
-string Journee::display() {
+string Day::display() {
     string message;
     _sort();
-    for (Match m : _matchs) {
+    for (Match m : _matches) {
         message.append("Math ");
         int idJournee = getNumber();
         if (idJournee < 9) {

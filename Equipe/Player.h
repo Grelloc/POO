@@ -1,5 +1,5 @@
-#ifndef joueur_h
-#define joueur_h
+#ifndef Player_h
+#define Player_h
 
 #include <unistd.h>
 #include <cstdio>
@@ -12,24 +12,24 @@
 using namespace std;
 
 
-class Joueur {
+class Player {
 private:
     string _name;
-    int _buts;
+    int _goals;
     int _match;
 
 public :
-    Joueur(const string &n);
+    Player(const string &n);
 
     void aMarque();
 
-    void aJoue(const int &n);
+    void havePlayed(const int &n);
 
-    int buts() const;
+    int get_goals() const;
 
-    double butsaverage() const;
+    double goalAverage() const;
 
-    string getname() const;
+    string get_name() const;
 
     string display() const;
 

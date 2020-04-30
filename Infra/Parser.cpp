@@ -1,15 +1,15 @@
 #include "Parser.h"
 
-Ligue Parser::parseAllFile(const string &depository) {
+League Parser::parseAllFile(const string &depository) {
     vector<string> files;
-    Ligue l;
+    League l;
     DIR *dirp = opendir(depository.c_str());
     dirent *dp;
     int i = 0;
     while ((dp = readdir(dirp)) != nullptr) {
         string temp(dp->d_name);
         if (temp.substr(temp.find_last_of('.') + 1) == "txt") {
-            l.add_journee(parseJournee(depository + '/' + dp->d_name));
+            l.add_day(parseDay(depository + '/' + dp->d_name));
         }
         i++;
     }
@@ -17,10 +17,10 @@ Ligue Parser::parseAllFile(const string &depository) {
     return l;
 }
 
-Journee Parser::parseJournee(const string &filename) {
+Day Parser::parseDay(const string &filename) {
     ifstream day(filename);
     if (day.is_open()) {
-        Journee j(stoi(filename.substr(filename.size() - 6, filename.size() - 4)));
+        Day j(stoi(filename.substr(filename.size() - 6, filename.size() - 4)));
         string line;
         try {
             int k = 0;
@@ -39,27 +39,26 @@ Journee Parser::parseJournee(const string &filename) {
     throw string("Fail to open file " + filename);
 }
 
-Match Parser::parseMatch(const string &line, const int &i) {
+Match Parser::parseMatch(string &line, const int &i) {
     string tA, tB;
     try {
         tA = parseTeamAName(line);
     } catch (string s) {
         cerr << s;
-        throw "Fail to parse Team A";
+        throw string("Fail to parse Team A" + tA);
     }
     try {
         tB = parseTeamBName(line);
     } catch (string s) {
         cerr << s;
-        throw "Fail to parse Team B";
+        throw string ("Fail to parse Team B" + tB);
     }
-    Equipe *a = EquipesManager::getInstance()->get_team(tA);
-    Equipe *b = EquipesManager::getInstance()->get_team(tB);
-    string recup = line;
-    int scoreA = parseTeamAScore(line), scoreB = parseTeamBScore(recup);
+    Team *a = TeamManager::getInstance()->get_team(tA);
+    Team *b = TeamManager::getInstance()->get_team(tB);
+    int scoreA = parseTeamAScore(line), scoreB = parseTeamBScore(line);
     Match m(i, a, b, scoreA, scoreB);
     if (scoreA > 0 || scoreB > 0) {
-        parseTeamPlayers(recup, m, scoreA);
+        parseTeamPlayers(line, m, scoreA);
     }
     return m;
 }
@@ -79,7 +78,7 @@ string Parser::parseTeamAName(const string &line) {
     string recup;
     cmatch cm;
     regex_search(line.c_str(), cm, e);
-    if (cm.size() != 0) {
+    if (!cm.empty()) {
         string str = cm[0];
         recup.append(str.substr(0, str.size() - 1));
         noSpace(recup);
@@ -107,7 +106,7 @@ string Parser::parseTeamBName(const string &line) {
     string recup;
     cmatch cm;
     regex_search(line.c_str(), cm, e);
-    if (cm.size() != 0) {
+    if (!cm.empty()) {
         string str = cm[0];
         recup.append(str.substr(0, str.size() - 1));
         noSpace(recup);
@@ -147,11 +146,11 @@ void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
         string temp = player[0];
         temp = conventionName(temp);
         if (i < scoreA) {
-            Joueur *p = JoueursManager::getInstance()->get_player(temp);
-            m.add_buteurA(Buteur(p, stoi(timer[0])));
+            Player *p = PlayerManager::getInstance()->get_player(temp);
+            m.add_scorerA(Scorer(p, stoi(timer[0])));
         } else {
-            Joueur *p = JoueursManager::getInstance()->get_player(temp);
-            m.add_buteurB(Buteur(p, stoi(timer[0])));
+            Player *p = PlayerManager::getInstance()->get_player(temp);
+            m.add_scorerB(Scorer(p, stoi(timer[0])));
         }
         recup = sm.suffix().str();
         i++;

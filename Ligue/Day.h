@@ -1,18 +1,18 @@
-#ifndef journee_h
-#define journee_h
+#ifndef Day_h
+#define Day_h
 
 #include "Match.h"
 
-class Journee {
+class Day {
 private:
     int _number;
-    vector<Match> _matchs;
+    vector<Match> _matches;
 
     void _sort();
 
 public:
 
-    Journee(int n) : _number(n) {}
+    Day(int n) : _number(n) {}
 
     void add_match(const Match &m);
 

@@ -1,4 +1,4 @@
-#include "Ligue/Ligue.h"
+#include "Ligue/League.h"
 #include "Infra/Parser.h"
 
 
@@ -35,7 +35,7 @@ char eArgument(string e) {
 }
 
 char jArgument(string j) {
-    if (j == "buts") {
+    if (j == "get_goals") {
         return 'b';
     }
     if (j == "buts/match") {
@@ -45,17 +45,17 @@ char jArgument(string j) {
 }
 
 int main(int argc, char *const argv[]) {
-    Ligue L;
+    League L;
     char opt, j, e;
-    char *repertory;
+    char *depository;
     unsigned n = 0;
     int temp = 0;
     bool dDefined = false, nDefined = false, jDefined = false, eDefined = false;
     while ((opt = getopt(argc, argv, "d:j:e:n:")) != -1) {
         switch (opt) {
             case 'd':
-                dDefined = 1;
-                repertory = optarg;
+                dDefined = true;
+                depository = optarg;
                 break;
             case 'j':
                 j = jArgument(optarg);
@@ -79,11 +79,10 @@ int main(int argc, char *const argv[]) {
                 break;
         }
     }
-    if (dDefined == 0) {
+    if (!dDefined) {
         USAGE();
     }
-    cout << "list files in [" << repertory << "]" << endl;
-    L = Parser::parseAllFile(repertory);
-    cout << JoueursManager::getInstance()->display(nDefined, n, jDefined, j)
-         << EquipesManager::getInstance()->display(nDefined, n, eDefined, e) << L.display();
+    L = Parser::parseAllFile(depository);
+    cout << PlayerManager::getInstance()->display(nDefined, n, jDefined, j)
+         << TeamManager::getInstance()->display(nDefined, n, eDefined, e) << L.display();
 }

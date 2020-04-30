@@ -1,16 +1,16 @@
 #ifndef match_h
 #define match_h
 
-#include "../Equipe/Equipe.h"
-#include "Buteur.h"
+#include "../Equipe/Team.h"
+#include "Scorer.h"
 
 class Match {
 private:
     int _number;
-    Equipe *_equipeA;
-    Equipe *_equipeB;
-    vector<Buteur> _buteursA;
-    vector<Buteur> _buteursB;
+    Team *_teamA;
+    Team *_teamB;
+    vector<Scorer> _scorerA;
+    vector<Scorer> _scorerB;
     int _scoreA;
     int _scoreB;
 
@@ -19,18 +19,18 @@ private:
     string displayB() const;
 
 public:
-    Match(int number, Equipe *equipeA, Equipe *equipeB, int scoreA, int scoreB) :
-            _number(number), _equipeA(equipeA), _equipeB(equipeB), _scoreA(scoreA), _scoreB(scoreB) { gagne(); }
+    Match(int number, Team *teamA, Team *teamB, int scoreA, int scoreB) :
+            _number(number), _teamA(teamA), _teamB(teamB), _scoreA(scoreA), _scoreB(scoreB) { Won(); }
 
     int getNumber() const;
 
-    void gagne();
+    void Won();
 
-    void majScore();
+    void updateScores();
 
-    void add_buteurA(const Buteur &b);
+    void add_scorerA(const Scorer &b);
 
-    void add_buteurB(const Buteur &b);
+    void add_scorerB(const Scorer &b);
 
     string display();
 };

@@ -4,9 +4,9 @@
 #include <dirent.h>
 #include <fstream>
 #include <regex>
-#include "../Managers/EquipesManager.h"
-#include "../Managers/JoueursManager.h"
-#include "../Ligue/Ligue.h"
+#include "../Managers/TeamManager.h"
+#include "../Managers/PlayerManager.h"
+#include "../Ligue/League.h"
 
 using namespace std;
 
@@ -14,9 +14,9 @@ class Parser {
 private:
     Parser() = default;
 
-    static Journee parseJournee(const string &filename);
+    static Day parseDay(const string &filename);
 
-    static Match parseMatch(const string &line, const int &i);
+    static Match parseMatch(string &line, const int &i);
 
     static string parseTeamAName(const string &line);
 
@@ -36,7 +36,7 @@ private:
 
 public:
 
-    static Ligue parseAllFile(const string &depository);
+    static League parseAllFile(const string &depository);
 };
 
 

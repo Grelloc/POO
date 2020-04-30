@@ -1,6 +1,6 @@
-#include "Equipe.h"
+#include "Team.h"
 
-Equipe::Equipe(const string &name) {
+Team::Team(const string &name) {
     _name = name;
     _victoires = 0;
     _defaites = 0;
@@ -9,55 +9,55 @@ Equipe::Equipe(const string &name) {
     _butsPris = 0;
 }
 
-int Equipe::points() const {
+int Team::points() const {
     return getvictoires() * 3 + getnuls();
 }
 
-void Equipe::add_player(Joueur *j) {
-    if (!exist(j->getname())) {
-        _joueurs.push_back(j);
+void Team::add_player(Player *j) {
+    if (!exist(j->get_name())) {
+        _players.push_back(j);
     }
 }
 
-double Equipe::goalAverage() const {
+double Team::goalAverage() const {
     return getbutsMis() / getbutsPris();
 }
 
-void Equipe::aPris(int &n) {
+void Team::aPris(int &n) {
     _butsPris += n;
 }
 
-void Equipe::aMis(int &n) {
+void Team::aMis(int &n) {
     _butsMis += n;
 }
 
-void Equipe::victoire() {
+void Team::victory() {
     _victoires++;
 }
 
-void Equipe::defaite() {
+void Team::defeat() {
     _defaites++;
 }
 
-void Equipe::nul() {
+void Team::nul() {
     _nuls++;
 }
 
-int Equipe::get_nmatch() const {
+int Team::get_nMatch() const {
     return _victoires + _defaites + _nuls;
 }
 
-void Equipe::update_players() {
-    for (Joueur *j: _joueurs) {
-        j->aJoue(get_nmatch());
+void Team::update_players() {
+    for (Player *j: _players) {
+        j->havePlayed(get_nMatch());
     }
 }
 
-string Equipe::display() const {
+string Team::display() const {
     return _name;
 }
 
-double Equipe::get(const char &sort) const {
+double Team::get(const char &sort) const {
     switch (sort) {
         case 'p':
             return points();
@@ -79,9 +79,9 @@ double Equipe::get(const char &sort) const {
     return 1;
 }
 
-bool Equipe::exist(const string &name) const {
-    for (const Joueur *player : _joueurs) {
-        if (player->getname() == name) {
+bool Team::exist(const string &name) const {
+    for (const Player *player : _players) {
+        if (player->get_name() == name) {
             return true;
         }
     }

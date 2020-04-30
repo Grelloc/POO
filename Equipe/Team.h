@@ -1,7 +1,7 @@
-#ifndef equipe_h
-#define equipe_h
+#ifndef Team_h
+#define Team_h
 
-#include "Joueur.h"
+#include "Player.h"
 
 
 using namespace std;
@@ -13,7 +13,7 @@ using namespace std;
                                     private:\
                                         type _##name;
 
-class Equipe {
+class Team {
 GetMacro(name, string)
 GetMacro(butsPris, int)
 GetMacro(butsMis, int)
@@ -21,11 +21,11 @@ GetMacro(victoires, int)
 GetMacro(defaites, int)
 GetMacro(nuls, int)
 private :
-    vector<Joueur *> _joueurs;
+    vector<Player *> _players;
 public :
-    Equipe(const string &name);
+    Team(const string &name);
 
-    void add_player(Joueur *j);
+    void add_player(Player *j);
 
     int points() const;
 
@@ -35,13 +35,13 @@ public :
 
     void aMis(int &n);
 
-    void victoire();
+    void victory();
 
-    void defaite();
+    void defeat();
 
     void nul();
 
-    int get_nmatch() const;
+    int get_nMatch() const;
 
     void update_players();
 

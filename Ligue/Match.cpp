@@ -5,42 +5,42 @@ int Match::getNumber() const {
 }
 
 
-void Match::add_buteurA(const Buteur &b) {
-    _buteursA.push_back(b);
-    _equipeA->add_player(b.get_player());
+void Match::add_scorerA(const Scorer &b) {
+    _scorerA.push_back(b);
+    _teamA->add_player(b.get_player());
 }
 
-void Match::add_buteurB(const Buteur &b) {
-    _buteursB.push_back(b);
-    _equipeB->add_player(b.get_player());
+void Match::add_scorerB(const Scorer &b) {
+    _scorerB.push_back(b);
+    _teamB->add_player(b.get_player());
 }
 
-void Match::gagne() {
+void Match::Won() {
     if (_scoreA > _scoreB) {
-        _equipeA->victoire();
-        _equipeB->defaite();
+        _teamA->victory();
+        _teamB->defeat();
     } else if (_scoreA < _scoreB) {
-        _equipeA->defaite();
-        _equipeB->victoire();
+        _teamA->defeat();
+        _teamB->victory();
     } else {
-        _equipeA->nul();
-        _equipeB->nul();
+        _teamA->nul();
+        _teamB->nul();
     }
-    majScore();
+    updateScores();
 }
 
-void Match::majScore() {
-    _equipeA->aMis(_scoreA);
-    _equipeA->aPris(_scoreB);
-    _equipeB->aMis(_scoreB);
-    _equipeB->aPris(_scoreA);
+void Match::updateScores() {
+    _teamA->aMis(_scoreA);
+    _teamA->aPris(_scoreB);
+    _teamB->aMis(_scoreB);
+    _teamB->aPris(_scoreA);
 }
 
 string Match::displayA() const {
     string message;
-    if (!_buteursA.empty()) {
-        message.append("\tButeur(s) ").append(_equipeA->display()).append(" :");
-        for (Buteur B : _buteursA) {
+    if (!_scorerA.empty()) {
+        message.append("\tButeur(s) ").append(_teamA->display()).append(" :");
+        for (Scorer B : _scorerA) {
             message.append(" ").append(B.display());
         }
         message.append("\n");
@@ -50,9 +50,9 @@ string Match::displayA() const {
 
 string Match::displayB() const {
     string message;
-    if (!_buteursB.empty()) {
-        message.append("\tButeur(s) ").append(_equipeB->display()).append(" :");
-        for (Buteur B : _buteursB) {
+    if (!_scorerB.empty()) {
+        message.append("\tButeur(s) ").append(_teamB->display()).append(" :");
+        for (Scorer B : _scorerB) {
             message.append(" ").append(B.display());
         }
         message.append("\n");
@@ -61,6 +61,6 @@ string Match::displayB() const {
 }
 
 string Match::display() {
-    return _equipeA->display() + " " + to_string(_scoreA) + " - " + to_string(_scoreB) + " " + _equipeB->display() +
+    return _teamA->display() + " " + to_string(_scoreA) + " - " + to_string(_scoreB) + " " + _teamB->display() +
            "\n" + displayA() + displayB();
 }
