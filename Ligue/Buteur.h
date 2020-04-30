@@ -12,6 +12,8 @@ private:
 public:
     Buteur(Joueur *j, int t);
 
+    Joueur *get_player() const;
+
     string display() const;
 };
 

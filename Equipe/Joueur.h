@@ -2,7 +2,7 @@
 #define joueur_h
 
 #include <unistd.h>
-#include <stdio.h>
+#include <cstdio>
 #include <iostream>
 #include <cassert>
 #include <string>
@@ -16,15 +16,20 @@ class Joueur {
 private:
     string _name;
     int _buts;
+    int _match;
 
 public :
     Joueur(const string &n);
 
     void aMarque();
 
-    string getname() const;
+    void aJoue(const int &n);
 
     int buts() const;
+
+    double butsaverage() const;
+
+    string getname() const;
 
     string display() const;
 

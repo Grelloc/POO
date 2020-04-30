@@ -5,8 +5,8 @@
 
 class Journee {
 private:
-    vector<Match> _matchs;
     int _number;
+    vector<Match> _matchs;
 
     void _sort();
 

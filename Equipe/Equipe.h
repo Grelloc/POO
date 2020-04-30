@@ -41,9 +41,15 @@ public :
 
     void nul();
 
+    int get_nmatch() const;
+
+    void update_players();
+
     string display() const;
 
     double get(const char &sort) const;
+
+    bool exist(const string &name) const;
 };
 
 #endif

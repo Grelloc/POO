@@ -8,7 +8,7 @@ EquipesManager *EquipesManager::_instance = nullptr;
 EquipesManager::EquipesManager() = default;
 
 EquipesManager::~EquipesManager() {
-    for (Equipe *team : _equipes){
+    for (Equipe *team : _equipes) {
         delete team;
     }
 }
@@ -94,6 +94,12 @@ string EquipesManager::display(int nDefined, unsigned n, int eDefined, char sort
     return message;
 }
 
+void EquipesManager::update_players() {
+    for (Equipe *team : _equipes) {
+        team->update_players();
+    }
+}
+
 bool EquipesManager::exist(const string &name) const {
     for (const Equipe *team : _equipes) {
         if (team->getname() == name) {
@@ -110,9 +116,8 @@ Equipe *EquipesManager::get_team(const string &name) const {
                 return team;
             }
         }
-    } else {
-        auto *a = new Equipe(name);
-        _instance->add_team(a);
-        return a;
     }
+    auto *a = new Equipe(name);
+    _instance->add_team(a);
+    return a;
 }

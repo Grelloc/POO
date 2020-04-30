@@ -1,13 +1,13 @@
 #include "Parser.h"
 
 Ligue Parser::parseAllFile(const string &depository) {
-    vector <string> files;
+    vector<string> files;
     Ligue l;
     DIR *dirp = opendir(depository.c_str());
     dirent *dp;
     int i = 0;
     while ((dp = readdir(dirp)) != nullptr) {
-        string temp (dp->d_name);
+        string temp(dp->d_name);
         if (temp.substr(temp.find_last_of('.') + 1) == "txt") {
             l.add_journee(parseJournee(depository + '/' + dp->d_name));
         }
@@ -20,7 +20,7 @@ Ligue Parser::parseAllFile(const string &depository) {
 Journee Parser::parseJournee(const string &filename) {
     ifstream day(filename);
     if (day.is_open()) {
-        Journee j(stoi(filename.substr(filename.size()-6, filename.size()-4)));
+        Journee j(stoi(filename.substr(filename.size() - 6, filename.size() - 4)));
         string line;
         try {
             int k = 0;
@@ -29,7 +29,7 @@ Journee Parser::parseJournee(const string &filename) {
                 k++;
             }
         } catch (string s) {
-            cerr<<s;
+            cerr << s;
             throw "fail to parse a team";
         }
 
@@ -44,21 +44,21 @@ Match Parser::parseMatch(const string &line, const int &i) {
     try {
         tA = parseTeamAName(line);
     } catch (string s) {
-        cerr<<s;
+        cerr << s;
         throw "Fail to parse Team A";
     }
     try {
         tB = parseTeamBName(line);
     } catch (string s) {
-        cerr<<s;
+        cerr << s;
         throw "Fail to parse Team B";
     }
     Equipe *a = EquipesManager::getInstance()->get_team(tA);
     Equipe *b = EquipesManager::getInstance()->get_team(tB);
     string recup = line;
     int scoreA = parseTeamAScore(line), scoreB = parseTeamBScore(recup);
-    Match m (i, a, b, scoreA, scoreB);
-    if(scoreA > 0 || scoreB>0){
+    Match m(i, a, b, scoreA, scoreB);
+    if (scoreA > 0 || scoreB > 0) {
         parseTeamPlayers(recup, m, scoreA);
     }
     return m;
@@ -131,7 +131,6 @@ int Parser::parseTeamBScore(string &line) {
 }
 
 
-
 void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
     regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?\w*\s*\d+)");
     smatch sm;
@@ -159,12 +158,12 @@ void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
     }
 }
 
-string Parser::conventionName(string &s){
+string Parser::conventionName(string &s) {
     noSpace(s);
-    unsigned i=0;
-    while (i<s.size()-1 && s[i]!='.'){
+    unsigned i = 0;
+    while (i < s.size() - 1 && s[i] != '.') {
         i++;
     }
-    s.insert(i+1, " ");
+    s.insert(i + 1, " ");
     return s;
 }

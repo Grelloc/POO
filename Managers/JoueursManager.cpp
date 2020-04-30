@@ -7,8 +7,8 @@ JoueursManager *JoueursManager::_instance = nullptr;
 
 JoueursManager::JoueursManager() = default;
 
-JoueursManager::~JoueursManager(){
-    for (Joueur *player : _joueurs){
+JoueursManager::~JoueursManager() {
+    for (Joueur *player : _joueurs) {
         delete player;
     }
     delete _instance;
@@ -27,18 +27,27 @@ void JoueursManager::add_player(Joueur *j) {
 }
 
 void JoueursManager::_sort(const char &type) {
-    if (type == 'b') {
-        sort(_joueurs.begin(), _joueurs.end(), [](Joueur *P, Joueur *P2) {
-            return P->buts() > P2->buts();
-        });
-    } else {
-        sort(_joueurs.begin(), _joueurs.end(), [](Joueur *P, Joueur *P2) {
-            return P->getname() < P2->getname();
-        });
+    switch (type) {
+        case 'b':
+            sort(_joueurs.begin(), _joueurs.end(), [](Joueur *P, Joueur *P2) {
+                return P->buts() > P2->buts();
+            });
+            break;
+        case 'm':
+            EquipesManager::getInstance()->update_players();
+            sort(_joueurs.begin(), _joueurs.end(), [](Joueur *P, Joueur *P2) {
+                return P->butsaverage() > P2->butsaverage();
+            });
+            break;
+        default:
+            sort(_joueurs.begin(), _joueurs.end(), [](Joueur *P, Joueur *P2) {
+                return P->getname() < P2->getname();
+            });
+            break;
     }
 }
 
-string JoueursManager::display(int nDefined, unsigned n,int jDefined , char sort) {
+string JoueursManager::display(int nDefined, unsigned n, int jDefined, char sort) {
     string message;
     _sort(sort);
     message.append("Liste des joueurs :\n");
@@ -78,13 +87,12 @@ Joueur *JoueursManager::get_player(const string &name) const {
                 return player;
             }
         }
-    } else {
-        auto *j = new Joueur(name);
-        if (CSC(name)) {
-            _instance->add_player(j);
-        }
-        return j;
     }
+    auto *j = new Joueur(name);
+    if (CSC(name)) {
+        _instance->add_player(j);
+    }
+    return j;
 }
 
 bool JoueursManager::CSC(const string &name) {

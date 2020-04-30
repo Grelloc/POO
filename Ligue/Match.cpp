@@ -7,10 +7,12 @@ int Match::getNumber() const {
 
 void Match::add_buteurA(const Buteur &b) {
     _buteursA.push_back(b);
+    _equipeA->add_player(b.get_player());
 }
 
 void Match::add_buteurB(const Buteur &b) {
     _buteursB.push_back(b);
+    _equipeB->add_player(b.get_player());
 }
 
 void Match::gagne() {

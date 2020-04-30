@@ -9,12 +9,14 @@ Equipe::Equipe(const string &name) {
     _butsPris = 0;
 }
 
-int Equipe::points() const{
+int Equipe::points() const {
     return getvictoires() * 3 + getnuls();
 }
 
 void Equipe::add_player(Joueur *j) {
-    _joueurs.push_back(j);
+    if (!exist(j->getname())) {
+        _joueurs.push_back(j);
+    }
 }
 
 double Equipe::goalAverage() const {
@@ -41,11 +43,21 @@ void Equipe::nul() {
     _nuls++;
 }
 
+int Equipe::get_nmatch() const {
+    return _victoires + _defaites + _nuls;
+}
+
+void Equipe::update_players() {
+    for (Joueur *j: _joueurs) {
+        j->aJoue(get_nmatch());
+    }
+}
+
 string Equipe::display() const {
     return _name;
 }
 
-double Equipe::get(const char &sort) const{
+double Equipe::get(const char &sort) const {
     switch (sort) {
         case 'p':
             return points();
@@ -65,4 +77,13 @@ double Equipe::get(const char &sort) const{
             break;
     }
     return 1;
+}
+
+bool Equipe::exist(const string &name) const {
+    for (const Joueur *player : _joueurs) {
+        if (player->getname() == name) {
+            return true;
+        }
+    }
+    return false;
 }

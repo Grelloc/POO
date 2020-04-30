@@ -11,6 +11,7 @@ private :
     EquipesManager();
 
     void _sort(const char &type);
+
 public :
     ~EquipesManager();
 
@@ -21,7 +22,10 @@ public :
     string display(int nDefined, unsigned n, int eDefined, char sort);
 
     bool exist(const string &name) const;
-    Equipe* get_team(const string &name) const;
+
+    Equipe *get_team(const string &name) const;
+
+    void update_players();
 };
 
 #endif

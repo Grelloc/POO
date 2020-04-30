@@ -5,7 +5,7 @@
 using namespace std;
 
 #define USAGE() ( \
-  cerr << "Usage: ./foot -d repertoire [-j buts] [-e points|victoires|defaites|nuls|attaque|defense|goalaverage] [-n <nombre>]\n", \
+  cerr << "Usage: ./foot -d repertoire [-j buts|buts/match] [-e points|victoires|defaites|nuls|attaque|defense|goalaverage] [-n <nombre>]\n", \
   exit(1) \
 )
 
@@ -35,8 +35,11 @@ char eArgument(string e) {
 }
 
 char jArgument(string j) {
-    if (j =="buts") {
+    if (j == "buts") {
         return 'b';
+    }
+    if (j == "buts/match") {
+        return 'm';
     }
     USAGE();
 }
@@ -47,7 +50,7 @@ int main(int argc, char *const argv[]) {
     char *repertory;
     unsigned n = 0;
     int temp = 0;
-    bool dDefined = false, nDefined = false, jDefined =false, eDefined =false;
+    bool dDefined = false, nDefined = false, jDefined = false, eDefined = false;
     while ((opt = getopt(argc, argv, "d:j:e:n:")) != -1) {
         switch (opt) {
             case 'd':
@@ -81,5 +84,6 @@ int main(int argc, char *const argv[]) {
     }
     cout << "list files in [" << repertory << "]" << endl;
     L = Parser::parseAllFile(repertory);
-    cout << JoueursManager::getInstance()->display(nDefined, n,jDefined ,j) << EquipesManager::getInstance()->display(nDefined, n, eDefined, e) << L.display();
+    cout << JoueursManager::getInstance()->display(nDefined, n, jDefined, j)
+         << EquipesManager::getInstance()->display(nDefined, n, eDefined, e) << L.display();
 }
