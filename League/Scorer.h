@@ -7,12 +7,12 @@ using namespace std;
 
 class Scorer {
 private:
-    Player *_players;
+    Player _player;
     int _timer;
 public:
-    Scorer(Player *j, int t);
+    Scorer(Player &j, int t);
 
-    Player *get_player() const;
+    Player &get_player();
 
     string display() const;
 };

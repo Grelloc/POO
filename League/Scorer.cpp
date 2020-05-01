@@ -1,15 +1,14 @@
 #include "Scorer.h"
 
-Scorer::Scorer(Player *j, int t) {
-    _players = j;
-    j->aMarque();
-    _timer = t;
+Scorer::Scorer(Player &j, int t) :
+        _player(j), _timer(t) {
+    j.aMarque();
 }
 
 string Scorer::display() const {
-    return _players->display().append("(").append(to_string(_timer)).append(")");
+    return _player.display().append("(").append(to_string(_timer)).append(")");
 }
 
-Player *Scorer::get_player() const {
-    return _players;
+Player &Scorer::get_player() {
+    return _player;
 }

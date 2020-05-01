@@ -7,8 +7,8 @@
 class Match {
 private:
     int _number;
-    Team *_teamA;
-    Team *_teamB;
+    Team &_teamA;
+    Team &_teamB;
     vector<Scorer> _scorerA;
     vector<Scorer> _scorerB;
     int _scoreA;

@@ -51,7 +51,7 @@ Match Parser::parseMatch(string &line, const int &i) {
         tB = parseTeamBName(line);
     } catch (string s) {
         cerr << s;
-        throw string ("Fail to parse Team B" + tB);
+        throw string("Fail to parse Team B" + tB);
     }
     Team *a = TeamManager::getInstance()->get_team(tA);
     Team *b = TeamManager::getInstance()->get_team(tB);
@@ -131,6 +131,7 @@ int Parser::parseTeamBScore(string &line) {
 
 
 void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
+    PlayerManager *pManager = PlayerManager::getInstance();
     regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?\w*\s*\d+)");
     smatch sm;
     int i = 0;
@@ -146,10 +147,15 @@ void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
         string temp = player[0];
         temp = conventionName(temp);
         if (i < scoreA) {
-            Player *p = PlayerManager::getInstance()->get_player(temp);
+            Player &p(temp);
+            if (pManager->exist(temp)) {
+                p = pManager->get_player(temp);
+            }else{
+                pManager->add_player(p);
+            }
             m.add_scorerA(Scorer(p, stoi(timer[0])));
         } else {
-            Player *p = PlayerManager::getInstance()->get_player(temp);
+            Player *p = pManager->get_player(temp);
             m.add_scorerB(Scorer(p, stoi(timer[0])));
         }
         recup = sm.suffix().str();

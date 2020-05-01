@@ -8,7 +8,7 @@ using namespace std;
 
 class PlayerManager {
 private :
-    vector<Player *> _player;
+    vector<Player> _players;
     static PlayerManager *_instance;
 
     PlayerManager();
@@ -23,13 +23,13 @@ public :
 
     static PlayerManager *getInstance();
 
-    void add_player(Player *j);
+    void add_player(const Player &j);
 
     bool exist(const string &name) const;
 
     string display(int nDefined, unsigned n, int jDefined, char sort);
 
-    Player *get_player(const string &name) const;
+    Player &get_player(const string &name);
 };
 
 
