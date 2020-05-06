@@ -32,6 +32,10 @@ public:
 
     void add_scorerB(const Scorer &b);
 
+    Team getTeamA() const;
+
+    Team getTeamB() const;
+
     string display();
 };
 

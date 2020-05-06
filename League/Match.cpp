@@ -60,6 +60,14 @@ string Match::displayB() const {
     return message;
 }
 
+Team Match::getTeamA() const {
+    return *_teamA;
+}
+
+Team Match::getTeamB() const {
+    return *_teamB;
+}
+
 string Match::display() {
     return _teamA->display() + " " + to_string(_scoreA) + " - " + to_string(_scoreB) + " " + _teamB->display() +
            "\n" + displayA() + displayB();

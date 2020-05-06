@@ -29,7 +29,7 @@ public :
 
     string display(int nDefined, unsigned n, int jDefined, char sort);
 
-    Player *get_player(const string &name) const;
+    Player *get_player(const string &name, const string &team) const;
 };
 
 

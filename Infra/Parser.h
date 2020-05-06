@@ -16,13 +16,13 @@ private:
 
     static Day parseDay(const string &filename);
 
-    static Match parseMatch(string &line, const int &i);
+    static Match parseMatch(const string &toParse, const int &i);
 
-    static string parseTeamAName(const string &line);
+    static string parseTeamAName(string &line);
 
     static int parseTeamAScore(const string &line);
 
-    static string parseTeamBName(const string &line);
+    static string parseTeamBName(string &line);
 
     static int parseTeamBScore(string &line);
 

@@ -12,7 +12,7 @@ League Parser::parseAllFile(const string &depository) {
             try {
                 l.add_day(parseDay(depository + '/' + dp->d_name));
             }
-            catch(string s){
+            catch (string s) {
                 throw s;
             }
         }
@@ -33,34 +33,31 @@ Day Parser::parseDay(const string &filename) {
             try {
                 j.add_match(parseMatch(line, k));
                 k++;
-            }catch (string s) {
-            throw string(s + " in " + to_string(j.getNumber()) + "-" + to_string(k+1) + '\n' + line);
+            } catch (string s) {
+                throw string(s + " in " + to_string(j.getNumber()) + "-" + to_string(k + 1) + '\n' + line);
+            }
         }
-    }
-
         day.close();
         return j;
     }
     throw string("Fail to open file " + filename);
 }
 
-Match Parser::parseMatch(string &line, const int &i) {
-    string tA, tB;
-    regex e (R"(^ *[a-zA-Z-]+ *: *[a-zA-Z-]+ *\d+ *- *\d+ *(([a-zA-Z-]+ *\. *[a-zA-Z-]+ *\d+ *\/?) *)*:? *(([a-zA-Z-]+ *\. *[a-zA-Z-]+ *\d+ *\/?) *)*$)");
-    if (!regex_match(line, e)){
+Match Parser::parseMatch(const string &toParse, const int &i) {
+    string tA, tB, line = toParse;
+    regex e(R"(^ *[a-zA-Z-]+ *: *[a-zA-Z-]+ *\d+ *- *\d+ *(([a-zA-Z-]+ *\. *[a-zA-Z-]+ *\d+ *\/?) *)*:? *(([a-zA-Z-]+ *\. *[a-zA-Z-]+ *\d+ *\/?) *)*$)");
+    if (!regex_match(line, e)) {
         throw string("Forbidden line format");
     }
     try {
         tA = parseTeamAName(line);
     } catch (string s) {
-        cerr << s;
-        throw string("Fail to parse Team A" + tA);
+        throw string(s);
     }
     try {
         tB = parseTeamBName(line);
     } catch (string s) {
-        cerr << s;
-        throw string ("Fail to parse Team B" + tB);
+        throw string(s);
     }
     Team *a = TeamManager::getInstance()->get_team(tA);
     Team *b = TeamManager::getInstance()->get_team(tB);
@@ -82,7 +79,7 @@ int Parser::toNumber(string s) {
     return stoi(s);
 }
 
-string Parser::parseTeamAName(const string &line) {
+string Parser::parseTeamAName(string &line) {
     regex e(R"(:)");
     string recup;
     cmatch cm;
@@ -90,9 +87,10 @@ string Parser::parseTeamAName(const string &line) {
     if (!cm.empty()) {
         recup = cm.prefix();
         noSpace(recup);
+        line = cm.suffix();
         return recup;
     }
-    throw string("fail to take a Team name");
+    throw string("Failed to take Team A name");
 }
 
 int Parser::parseTeamAScore(const string &line) {
@@ -105,22 +103,23 @@ int Parser::parseTeamAScore(const string &line) {
         recup.append(str.substr(0, str.size() - 1));
         return toNumber(recup);
     }
-    throw string("fail to take a Team name");
+    throw string("Failed to take Team A score");
 }
 
 
-string Parser::parseTeamBName(const string &line) {
-    regex e(R"(:\s*\w+(-?)\w+\s*)");
+string Parser::parseTeamBName(string &line) {
+    regex e(R"(\w+(-?)\w+)");
     string recup;
     cmatch cm;
     regex_search(line.c_str(), cm, e);
     if (!cm.empty()) {
         string str = cm[0];
-        recup.append(str.substr(0, str.size() - 1));
+        recup.append(str);
         noSpace(recup);
+        line = cm.suffix();
         return recup;
     }
-    throw string("fail to take a Team name");
+    throw string("Failed to take Team B name");
 }
 
 int Parser::parseTeamBScore(string &line) {
@@ -134,7 +133,7 @@ int Parser::parseTeamBScore(string &line) {
         line = cm.suffix().str();
         return toNumber(recup);
     }
-    throw string("fail to take a Team name");
+    throw string("Failed to take Team B score");
 }
 
 
@@ -154,10 +153,10 @@ void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
         string temp = player[0];
         temp = conventionName(temp);
         if (i < scoreA) {
-            Player *p = PlayerManager::getInstance()->get_player(temp);
+            Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamA().getname());
             m.add_scorerA(Scorer(p, stoi(timer[0])));
         } else {
-            Player *p = PlayerManager::getInstance()->get_player(temp);
+            Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamB().getname());
             m.add_scorerB(Scorer(p, stoi(timer[0])));
         }
         recup = sm.suffix().str();
