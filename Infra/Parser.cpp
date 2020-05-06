@@ -9,7 +9,12 @@ League Parser::parseAllFile(const string &depository) {
     while ((dp = readdir(dirp)) != nullptr) {
         string temp(dp->d_name);
         if (temp.substr(temp.find_last_of('.') + 1) == "txt") {
-            l.add_day(parseDay(depository + '/' + dp->d_name));
+            try {
+                l.add_day(parseDay(depository + '/' + dp->d_name));
+            }
+            catch(string s){
+                throw s;
+            }
         }
         i++;
     }
@@ -22,16 +27,16 @@ Day Parser::parseDay(const string &filename) {
     if (day.is_open()) {
         Day j(stoi(filename.substr(filename.size() - 6, filename.size() - 4)));
         string line;
-        try {
-            int k = 0;
-            while (getline(day, line)) {
+
+        int k = 0;
+        while (getline(day, line)) {
+            try {
                 j.add_match(parseMatch(line, k));
                 k++;
-            }
-        } catch (string s) {
-            cerr << s;
-            throw "fail to parse a team";
+            }catch (string s) {
+            throw string(s + " in " + to_string(j.getNumber()) + "-" + to_string(k+1) + '\n' + line);
         }
+    }
 
         day.close();
         return j;
@@ -41,6 +46,10 @@ Day Parser::parseDay(const string &filename) {
 
 Match Parser::parseMatch(string &line, const int &i) {
     string tA, tB;
+    regex e (R"(^ *[a-zA-Z-]+ *: *[a-zA-Z-]+ *\d+ *- *\d+ *(([a-zA-Z-]+ *\. *[a-zA-Z-]+ *\d+ *\/?) *)*:? *(([a-zA-Z-]+ *\. *[a-zA-Z-]+ *\d+ *\/?) *)*$)");
+    if (!regex_match(line, e)){
+        throw string("Forbidden line format");
+    }
     try {
         tA = parseTeamAName(line);
     } catch (string s) {
@@ -74,13 +83,12 @@ int Parser::toNumber(string s) {
 }
 
 string Parser::parseTeamAName(const string &line) {
-    regex e(R"(^\s*\w+(-?)\w+\s*:)");
+    regex e(R"(:)");
     string recup;
     cmatch cm;
     regex_search(line.c_str(), cm, e);
     if (!cm.empty()) {
-        string str = cm[0];
-        recup.append(str.substr(0, str.size() - 1));
+        recup = cm.prefix();
         noSpace(recup);
         return recup;
     }

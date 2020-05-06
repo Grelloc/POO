@@ -81,8 +81,22 @@ int main(int argc, char *const argv[]) {
     if (!dDefined) {
         USAGE();
     }
+    try{
     L = Parser::parseAllFile(depository);
-    cout << TeamManager::getInstance()->display(nDefined, n, eDefined, e)
-         << PlayerManager::getInstance()->display(nDefined, n, jDefined, j)
-         << L.display();
+    }
+    catch (string s){
+        cerr << s;
+        delete PlayerManager::getInstance();
+        delete TeamManager::getInstance();
+        exit(1);
+    }
+    if (eDefined) {
+        cout << TeamManager::getInstance()->display(nDefined, n, eDefined, e);
+    }
+    if (jDefined) {
+        cout << PlayerManager::getInstance()->display(nDefined, n, jDefined, j);
+    }
+    //cout << L.display(); //Cause I'm kind
+    delete PlayerManager::getInstance();
+    delete TeamManager::getInstance();
 }

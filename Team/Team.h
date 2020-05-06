@@ -23,7 +23,7 @@ GetMacro(nuls, int)
 private :
     vector<Player *> _players;
 public :
-    Team(const string &name);
+    explicit Team(const string &name);
 
     void add_player(Player *j);
 

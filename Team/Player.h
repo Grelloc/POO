@@ -15,15 +15,18 @@ using namespace std;
 class Player {
 private:
     string _name;
-    int _goals;
-    int _match;
+    string _team; //TODO
+    int _goals=0;
+    int _match=0;
 
 public :
-    Player(const string &n);
+    Player(string n);
 
     void aMarque();
 
     void havePlayed(const int &n);
+
+    string get_team() const; //TODO
 
     int get_goals() const;
 
@@ -31,7 +34,7 @@ public :
 
     string get_name() const;
 
-    string display() const;
+    string display(const char &sort) const;
 
     double get(const char &sort) const;
 };

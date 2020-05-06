@@ -10,6 +10,7 @@ TeamManager::~TeamManager() {
     for (Team *team : _equipes) {
         delete team;
     }
+    _equipes.clear();
 }
 
 TeamManager *TeamManager::getInstance() {

@@ -11,7 +11,7 @@ PlayerManager::~PlayerManager() {
     for (Player *player : _player) {
         delete player;
     }
-    delete _instance;
+    _player.clear();
 }
 
 
@@ -54,20 +54,20 @@ string PlayerManager::display(int nDefined, unsigned n, int jDefined, char sort)
     if (nDefined == 0 || n > _player.size()) {
         for (Player *p : _player) {
             if(CSC(p->get_name())) {
-                message.append(" ").append(p->display());
+                message.append("\n").append(p->display(sort));
             }
         }
     } else {
         unsigned i;
         for (i = 0; i < n; i++) {
             if(CSC(_player[i]->get_name())) {
-                message.append(" ").append(_player[i]->display());
+                message.append("\n").append(_player[i]->display(sort));
             }
         }
         if (jDefined) {
             while (i < _player.size() && _player[n - 1]->get(sort) == _player[i]->get(sort)) {
                 if(CSC(_player[i]->get_name())) {
-                    message.append(" ").append(_player[i]->display());
+                    message.append("\n").append(_player[i]->display(sort));
                 }
                 i++;
             }

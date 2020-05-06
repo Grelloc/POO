@@ -7,7 +7,7 @@ Scorer::Scorer(Player *j, int t) {
 }
 
 string Scorer::display() const {
-    return _players->display().append("(").append(to_string(_timer)).append(")");
+    return _players->get_name().append("(").append(to_string(_timer)).append(")");
 }
 
 Player *Scorer::get_player() const {
