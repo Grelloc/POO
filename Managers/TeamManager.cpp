@@ -75,16 +75,16 @@ string TeamManager::display(int nDefined, unsigned n, int eDefined, char sort) {
     message.append("Liste des equipes :\n");
     if (nDefined == 0 || n > _equipes.size()) {
         for (Team *T : _equipes) {
-            message.append(" ").append(T->display());
+            message.append(" ").append(T->display(sort));
         }
     } else {
         unsigned i;
         for (i = 0; i < n; i++) {
-            message.append(" ").append(_equipes[i]->display());
+            message.append(" ").append(_equipes[i]->display(sort));
         }
         if (eDefined) {
             while (i < _equipes.size() && _equipes[n - 1]->get(sort) == _equipes[i]->get(sort)) {
-                message.append(" ").append(_equipes[i]->display());
+                message.append(" ").append(_equipes[i]->display(sort));
                 i++;
             }
         }

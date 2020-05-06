@@ -52,8 +52,35 @@ void Team::update_players() {
     }
 }
 
-string Team::display() const {
-    return _name;
+string Team::display(const char &sort) const {
+    string message(getname() + "\n\t\t\t\t\t\t");
+    switch (sort) {
+        case 'p':
+            message.append(to_string(points())).append(" points\n");
+            break;
+        case 'v':
+            message.append(to_string(_victoires)).append(" victoires\n");
+            break;
+        case 'd':
+            message.append(to_string(_defaites)).append(" defaites\n");
+            break;
+        case 'n':
+            message.append(to_string(_nuls)).append(" match nuls\n");
+            break;
+        case 'm':
+            message.append(to_string(_butsMis)).append(" buts mis\n");
+            break;
+        case 'e':
+            message.append(to_string(_butsPris)).append(" buts pris\n");
+            break;
+        case 'g':
+            message.append(to_string(goalAverage())).append(" goal average\n");
+            break;
+
+        default:
+            throw string("Error, this should not happened\n");
+    }
+    return message;
 }
 
 double Team::get(const char &sort) const {

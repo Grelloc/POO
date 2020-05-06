@@ -39,7 +39,7 @@ void Match::updateScores() {
 string Match::displayA() const {
     string message;
     if (!_scorerA.empty()) {
-        message.append("\tButeur(s) ").append(_teamA->display()).append(" :");
+        message.append("\tButeur(s) ").append(_teamA->getname()).append(" :");
         for (Scorer B : _scorerA) {
             message.append(" ").append(B.display());
         }
@@ -51,7 +51,7 @@ string Match::displayA() const {
 string Match::displayB() const {
     string message;
     if (!_scorerB.empty()) {
-        message.append("\tButeur(s) ").append(_teamB->display()).append(" :");
+        message.append("\tButeur(s) ").append(_teamB->getname()).append(" :");
         for (Scorer B : _scorerB) {
             message.append(" ").append(B.display());
         }
@@ -69,6 +69,6 @@ Team Match::getTeamB() const {
 }
 
 string Match::display() {
-    return _teamA->display() + " " + to_string(_scoreA) + " - " + to_string(_scoreB) + " " + _teamB->display() +
+    return _teamA->getname() + " " + to_string(_scoreA) + " - " + to_string(_scoreB) + " " + _teamB->getname() +
            "\n" + displayA() + displayB();
 }

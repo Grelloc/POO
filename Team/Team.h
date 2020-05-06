@@ -45,7 +45,7 @@ public :
 
     void update_players();
 
-    string display() const;
+    string display(const char &sort) const;
 
     double get(const char &sort) const;
 
