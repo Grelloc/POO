@@ -5,8 +5,8 @@
 using namespace std;
 
 Player::Player(string n, string team) : _name(std::move(n)), _team(std::move(team)) {
-    _match=0;
-    _goals=0;
+    _match = 0;
+    _goals = 0;
 }
 
 int Player::get_goals() const {
@@ -34,6 +34,19 @@ void Player::havePlayed(const int &n) {
     _match += n;
 }
 
+string Player::displayAv() const {
+    string message;
+    int Av = goalAverage();
+    if (Av < 100) {
+        if (Av < 10) {
+            return message.append("0.0").append(to_string(Av));
+        } else {
+            return message.append("0.").append(to_string(Av));
+        }
+    }
+    return message.append(to_string(goalAverage()).insert(message.size() - 2, "."));
+}
+
 
 string Player::display(const char &sort) const {
     string message(get_name() + " (" + get_team() + ")\n\t\t\t\t\t\t");
@@ -41,9 +54,7 @@ string Player::display(const char &sort) const {
         case 'b':
             return message.append(to_string(get_goals())).append(" Buts");
         case 'm':
-            message.append(to_string(goalAverage()));
-            to_string(goalAverage()).size()>2? message.insert(message.size()-2, ".") : message.insert(message.size()-2, "0.");
-            return message.append(" Buts/Match");
+            return message.append(displayAv()).append(" Buts/Match");
         default :
             throw string("Error, this shouldn't have happened\n");
     }

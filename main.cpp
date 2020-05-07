@@ -81,10 +81,10 @@ int main(int argc, char *const argv[]) {
     if (!dDefined) {
         USAGE();
     }
-    try{
-    L = Parser::parseAllFile(depository);
+    try {
+        L = Parser::parseAllFile(depository);
     }
-    catch (string s){
+    catch (string s) {
         cerr << s;
         delete PlayerManager::getInstance();
         delete TeamManager::getInstance();

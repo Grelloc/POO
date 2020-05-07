@@ -53,20 +53,20 @@ string PlayerManager::display(int nDefined, unsigned n, int jDefined, char sort)
     message.append("Liste des joueurs :\n");
     if (nDefined == 0 || n > _player.size()) {
         for (Player *p : _player) {
-            if(!CSC(p->get_name())) {
+            if (!CSC(p->get_name())) {
                 message.append("\n").append(p->display(sort));
             }
         }
     } else {
         unsigned i;
         for (i = 0; i < n; i++) {
-            if(!CSC(_player[i]->get_name())) {
+            if (!CSC(_player[i]->get_name())) {
                 message.append("\n").append(_player[i]->display(sort));
             }
         }
         if (jDefined) {
             while (i < _player.size() && _player[n - 1]->get(sort) == _player[i]->get(sort)) {
-                if(!CSC(_player[i]->get_name())) {
+                if (!CSC(_player[i]->get_name())) {
                     message.append("\n").append(_player[i]->display(sort));
                 }
                 i++;
@@ -91,8 +91,8 @@ Player *PlayerManager::get_player(const string &name, const string &team) const 
     if (exist(name) && !CSC(name)) {
         for (Player *player : _player) {
             if (player->get_name() == name) {
-                if (player->get_team() != team && name != "R. Oudin" && name != "J. Reine-Adelaide"){
-                    throw string ("Try to add a player in another team " + name + " " + team);
+                if (player->get_team() != team && name != "R. Oudin" && name != "J. Reine-Adelaide") {
+                    throw string("Try to add a player in another team " + name + " " + team);
                 }
                 return player;
             }

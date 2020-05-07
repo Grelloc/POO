@@ -1,6 +1,6 @@
 #include "Team.h"
 
-Team::Team(const string &name) :_name(name){
+Team::Team(const string &name) : _name(name) {
     _victoires = 0;
     _defaites = 0;
     _nuls = 0;

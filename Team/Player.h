@@ -34,6 +34,8 @@ public :
 
     string get_name() const;
 
+    string displayAv() const;
+
     string display(const char &sort) const;
 
     double get(const char &sort) const;
