@@ -69,7 +69,7 @@ void TeamManager::_sort(const char &type) {
     }
 }
 
-string TeamManager::display(int nDefined, unsigned n, int eDefined, char sort) {
+string TeamManager::display(int nDefined, unsigned n, int eDefined, const char &sort) {
     string message;
     _sort(sort);
     message.append("Liste des equipes :\n");

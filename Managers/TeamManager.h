@@ -23,7 +23,7 @@ public :
 
     void add_team(Team *e);
 
-    string display(int nDefined, unsigned n, int eDefined, char sort);
+    string display(int nDefined, unsigned n, int eDefined, const char &sort);
 
     bool exist(const string &name) const;
 

@@ -64,7 +64,7 @@ Match Parser::parseMatch(const string &toParse, const int &i) {
     int scoreA = parseTeamAScore(line), scoreB = parseTeamBScore(line);
     Match m(i, a, b, scoreA, scoreB);
     if (scoreA > 0 || scoreB > 0) {
-        parseTeamPlayers(line, m, scoreA);
+        parseTeamPlayers(line, m, scoreA, scoreB);
     }
     return m;
 }
@@ -137,11 +137,26 @@ int Parser::parseTeamBScore(string &line) {
 }
 
 
-void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
-    regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?\w*\s*\d+)");
+void Parser::parseTeamPlayers(string &line, Match &m, const int &scoreA, const int &scoreB) {
+    if (scoreA > 0 || scoreB > 0) {
+        regex e(R"(:)");
+        smatch sm;
+        regex_search(line, sm, e);
+        if (sm.empty()) {
+            throw string("Forbidden line format");
+        } else {
+            string scorerA(sm.prefix()), scorerB(sm.suffix());
+            parseTeamAPlayers(scorerA, m, scoreA);
+            parseTeamBPlayers(scorerB, m, scoreB);
+        }
+    }
+}
+
+void Parser::parseTeamAPlayers(string &scorerA, Match &m, const int &scoreA) {
+    regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?[a-zA-Z]*\s*\d+)");
     smatch sm;
     int i = 0;
-    while (regex_search(recup, sm, e)) {
+    while (regex_search(scorerA, sm, e)) {
         string str = sm[0];
         regex e_timer("\\d+");
         smatch timer;
@@ -152,15 +167,38 @@ void Parser::parseTeamPlayers(string recup, Match &m, const int &scoreA) {
         regex_search(str, player, e_player);
         string temp = player[0];
         temp = conventionName(temp);
-        if (i < scoreA) {
-            Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamA().getname());
-            m.add_scorerA(Scorer(p, stoi(timer[0])));
-        } else {
-            Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamB().getname());
-            m.add_scorerB(Scorer(p, stoi(timer[0])));
-        }
-        recup = sm.suffix().str();
+        Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamA().getname());
+        m.add_scorerA(Scorer(p, stoi(timer[0])));
+        scorerA = sm.suffix().str();
         i++;
+    }
+    if (i != scoreA) {
+        throw string("Bad number of player in team A");
+    }
+}
+
+void Parser::parseTeamBPlayers(string &scorerB, Match &m, const int &scoreB) {
+    regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?[a-zA-Z]*\s*\d+)");
+    smatch sm;
+    int i = 0;
+    while (regex_search(scorerB, sm, e)) {
+        string str = sm[0];
+        regex e_timer("\\d+");
+        smatch timer;
+        regex_search(str, timer, e_timer);
+
+        regex e_player(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?\w*)");
+        smatch player;
+        regex_search(str, player, e_player);
+        string temp = player[0];
+        temp = conventionName(temp);
+        Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamB().getname());
+        m.add_scorerB(Scorer(p, stoi(timer[0])));
+        scorerB = sm.suffix().str();
+        i++;
+    }
+    if (i != scoreB) {
+        throw string("Bad number of player in team B");
     }
 }
 

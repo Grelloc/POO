@@ -16,11 +16,11 @@ class Player {
 private:
     string _name;
     string _team;
-    int _goals=0;
-    int _match=0;
+    int _goals;
+    int _match;
 
 public :
-    Player(const string &name, const string &team);
+    Player(string name, string team);
 
     void aMarque();
 
@@ -30,7 +30,7 @@ public :
 
     int get_goals() const;
 
-    double goalAverage() const;
+    int goalAverage() const;
 
     string get_name() const;
 

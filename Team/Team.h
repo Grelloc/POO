@@ -29,7 +29,7 @@ public :
 
     int points() const;
 
-    double goalAverage() const;
+    int goalAverage() const;
 
     void aPris(int &n);
 
@@ -47,7 +47,7 @@ public :
 
     string display(const char &sort) const;
 
-    double get(const char &sort) const;
+    int get(const char &sort) const;
 
     bool exist(const string &name) const;
 };

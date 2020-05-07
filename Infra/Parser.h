@@ -26,7 +26,11 @@ private:
 
     static int parseTeamBScore(string &line);
 
-    static void parseTeamPlayers(string line, Match &m, const int &scoreA);
+    static void parseTeamPlayers(string &line, Match &m, const int &scoreA, const int &scoreB);
+
+    static void parseTeamAPlayers(string &scorerA, Match &m, const int &scoreA);
+
+    static void parseTeamBPlayers(string &scorerB, Match &m, const int &scoreB);
 
     static void noSpace(string &s);
 

@@ -10,32 +10,32 @@ using namespace std;
 )
 
 char eArgument(string argument) {
-    if (argument.compare("points")) {
+    if (argument == "points") {
         return 'p';
     }
-    if (argument.compare("victoires")) {
+    if (argument == "victoires") {
         return 'v';
     }
-    if (argument.compare("defaites")) {
+    if (argument == "defaites") {
         return 'd';
     }
-    if (argument.compare("nuls")) {
+    if (argument == "nuls") {
         return 'n';
     }
-    if (argument.compare("attaque")) {
+    if (argument == "attaque") {
         return 'm';
     }
-    if (argument.compare("defense")) {
+    if (argument == "defense") {
         return 'e';
     }
-    if (argument.compare("goalaverage")) {
+    if (argument == "goalaverage") {
         return 'g';
     }
     USAGE();
 }
 
 char jArgument(string j) {
-    if (j == "get_goals") {
+    if (j == "buts") {
         return 'b';
     }
     if (j == "buts/match") {

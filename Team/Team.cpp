@@ -18,8 +18,8 @@ void Team::add_player(Player *j) {
     }
 }
 
-double Team::goalAverage() const {
-    return getbutsMis() / getbutsPris();
+int Team::goalAverage() const {
+    return getbutsMis() - getbutsPris();
 }
 
 void Team::aPris(int &n) {
@@ -78,12 +78,12 @@ string Team::display(const char &sort) const {
             break;
 
         default:
-            throw string("Error, this should not happened\n");
+            throw string("Error, this shouldn't have happened\n");
     }
     return message;
 }
 
-double Team::get(const char &sort) const {
+int Team::get(const char &sort) const {
     switch (sort) {
         case 'p':
             return points();
