@@ -1,6 +1,9 @@
 #include "League/League.h"
 #include "Infra/Parser.h"
 
+#include <iostream>
+#include <getopt.h>
+
 
 using namespace std;
 
@@ -81,6 +84,9 @@ int main(int argc, char *const argv[]) {
     if (!dDefined) {
         USAGE();
     }
+    if (!nDefined) {
+        n = 10;
+    }
     try {
         L = Parser::parseAllFile(depository);
     }
@@ -91,12 +97,11 @@ int main(int argc, char *const argv[]) {
         exit(1);
     }
     if (eDefined) {
-        cout << TeamManager::getInstance()->display(nDefined, n, eDefined, e);
+        cout << TeamManager::getInstance()->display(n, e);
     }
     if (jDefined) {
-        cout << PlayerManager::getInstance()->display(nDefined, n, jDefined, j);
+        cout << PlayerManager::getInstance()->display(n, j);
     }
-    //cout << L.display(); //Cause I'm kind
     delete PlayerManager::getInstance();
     delete TeamManager::getInstance();
 }

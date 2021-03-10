@@ -1,10 +1,9 @@
+#include "Player.h"
+#include <vector>
+
 #ifndef Team_h
 #define Team_h
 
-#include "Player.h"
-
-
-using namespace std;
 
 #define GetMacro(name, type) public :\
                                     type get##name() const{ \
@@ -14,16 +13,16 @@ using namespace std;
                                         type _##name;
 
 class Team {
-GetMacro(name, string)
+GetMacro(name, std::string)
 GetMacro(butsPris, int)
 GetMacro(butsMis, int)
 GetMacro(victoires, int)
 GetMacro(defaites, int)
 GetMacro(nuls, int)
 private :
-    vector<Player *> _players;
+    std::vector<Player *> _players;
 public :
-    Team(const string &name);
+    Team(const std::string &name);
 
     void add_player(Player *j);
 
@@ -45,11 +44,14 @@ public :
 
     void update_players();
 
-    string display(const char &sort) const;
+    std::string display(const char &sort) const;
+
+    std::string setSpace(int n) const;
 
     int get(const char &sort) const;
 
-    bool exist(const string &name) const;
+    bool exist(const std::string &name) const;
+
 };
 
 #endif

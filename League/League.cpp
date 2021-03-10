@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "League.h"
 
 void League::add_day(const Day &j) {

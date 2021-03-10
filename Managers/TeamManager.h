@@ -5,7 +5,7 @@
 
 class TeamManager {
 private :
-    vector<Team *> _equipes;
+    std::vector<Team *> _equipes;
     static TeamManager *_instance;
 
     TeamManager();
@@ -23,11 +23,11 @@ public :
 
     void add_team(Team *e);
 
-    string display(int nDefined, unsigned n, int eDefined, const char &sort);
+    std::string display(unsigned n, const char &sort);
 
-    bool exist(const string &name) const;
+    bool exist(const std::string &name) const;
 
-    Team *get_team(const string &name) const;
+    Team *get_team(const std::string &name) const;
 
     void update_players();
 };

@@ -27,7 +27,7 @@ public :
 
     bool exist(const string &name) const;
 
-    string display(int nDefined, unsigned n, int jDefined, char sort);
+    string display(unsigned n, char sort);
 
     Player *get_player(const string &name, const string &team) const;
 };

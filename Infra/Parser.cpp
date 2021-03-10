@@ -6,17 +6,21 @@ League Parser::parseAllFile(const string &depository) {
     DIR *dirp = opendir(depository.c_str());
     dirent *dp;
     int i = 0;
-    while ((dp = readdir(dirp)) != nullptr) {
-        string temp(dp->d_name);
-        if (temp.substr(temp.find_last_of('.') + 1) == "txt") {
-            try {
-                l.add_day(parseDay(depository + '/' + dp->d_name));
+    if (dirp != nullptr) {
+        while ((dp = readdir(dirp)) != nullptr) {
+            string temp(dp->d_name);
+            if (temp.substr(temp.find_last_of('.') + 1) == "txt") {
+                try {
+                    l.add_day(parseDay(depository + '/' + dp->d_name));
+                }
+                catch (string s) {
+                    throw s;
+                }
             }
-            catch (string s) {
-                throw s;
-            }
+            i++;
         }
-        i++;
+    } else {
+        throw string("Can't find depository");
     }
     (void) closedir(dirp);
     return l;
@@ -153,21 +157,18 @@ void Parser::parseTeamPlayers(string &line, Match &m, const int &scoreA, const i
 }
 
 void Parser::parseTeamAPlayers(string &scorerA, Match &m, const int &scoreA) {
-    regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?[a-zA-Z]*\s*\d+)");
+    regex e(R"([A-Z]{1,3}(-[A-Z])? *. *[a-zA-Z]+-?[a-zA-Z]* *\d+)");
     smatch sm;
     int i = 0;
     while (regex_search(scorerA, sm, e)) {
         string str = sm[0];
-        regex e_timer("\\d+");
+        regex e_timer(R"(\d+)");
         smatch timer;
         regex_search(str, timer, e_timer);
 
-        regex e_player(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?\w*)");
-        smatch player;
-        regex_search(str, player, e_player);
-        string temp = player[0];
-        temp = conventionName(temp);
-        Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamA().getname());
+        string player = timer.prefix().str();
+        player = conventionName(player);
+        Player *p = PlayerManager::getInstance()->get_player(player, m.getTeamA().getname());
         m.add_scorerA(Scorer(p, stoi(timer[0])));
         scorerA = sm.suffix().str();
         i++;
@@ -178,21 +179,18 @@ void Parser::parseTeamAPlayers(string &scorerA, Match &m, const int &scoreA) {
 }
 
 void Parser::parseTeamBPlayers(string &scorerB, Match &m, const int &scoreB) {
-    regex e(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?[a-zA-Z]*\s*\d+)");
+    regex e(R"([A-Z]{1,3}(-[A-Z])? *. *[a-zA-Z]+-?[a-zA-Z]* *\d+)");
     smatch sm;
     int i = 0;
     while (regex_search(scorerB, sm, e)) {
         string str = sm[0];
-        regex e_timer("\\d+");
+        regex e_timer(R"(\d+)");
         smatch timer;
         regex_search(str, timer, e_timer);
 
-        regex e_player(R"([A-Z]{1,3}(-[A-Z])?.\s*[a-zA-Z]+-?\w*)");
-        smatch player;
-        regex_search(str, player, e_player);
-        string temp = player[0];
-        temp = conventionName(temp);
-        Player *p = PlayerManager::getInstance()->get_player(temp, m.getTeamB().getname());
+        string player = timer.prefix().str();
+        player = conventionName(player);
+        Player *p = PlayerManager::getInstance()->get_player(player, m.getTeamB().getname());
         m.add_scorerB(Scorer(p, stoi(timer[0])));
         scorerB = sm.suffix().str();
         i++;

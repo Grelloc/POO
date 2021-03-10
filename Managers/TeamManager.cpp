@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "TeamManager.h"
 
 using namespace std;
@@ -28,37 +29,66 @@ void TeamManager::_sort(const char &type) {
     switch (type) {
         case 'p':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->points() > T2->points();
+                if (T->points() == T2->points()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->points() > T2->points();
+
+                }
             });
             break;
         case 'v':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->getvictoires() > T2->getvictoires();
+                if (T->getvictoires() == T2->getvictoires()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->getvictoires() > T2->getvictoires();
+                }
             });
             break;
         case 'd':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->getdefaites() < T2->getdefaites();
+                if (T->getdefaites() == T2->getdefaites()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->getdefaites() < T2->getdefaites();
+                }
             });
             break;
         case 'n':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->getnuls() > T2->getnuls();
+                if (T->getnuls() == T2->getnuls()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->getnuls() > T2->getnuls();
+                }
             });
             break;
         case 'm':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->getbutsMis() > T2->getbutsMis();
+                if (T->getbutsMis() == T2->getbutsMis()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->getbutsMis() > T2->getbutsMis();
+                }
             });
             break;
         case 'e':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->getbutsPris() < T2->getbutsPris();
+                if (T->getbutsPris() == T2->getbutsPris()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->getbutsPris() < T2->getbutsPris();
+                }
             });
             break;
         case 'g':
             sort(_equipes.begin(), _equipes.end(), [](Team *T, Team *T2) {
-                return T->goalAverage() > T2->goalAverage();
+                if (T->goalAverage() == T2->goalAverage()) {
+                    return T->getname() < T2->getname();
+                } else {
+                    return T->goalAverage() > T2->goalAverage();
+                }
             });
             break;
         default:
@@ -69,11 +99,11 @@ void TeamManager::_sort(const char &type) {
     }
 }
 
-string TeamManager::display(int nDefined, unsigned n, int eDefined, const char &sort) {
+string TeamManager::display(unsigned n, const char &sort) {
     string message;
     _sort(sort);
     message.append("Liste des equipes :\n");
-    if (nDefined == 0 || n > _equipes.size()) {
+    if (n > _equipes.size()) {
         for (Team *T : _equipes) {
             message.append(" ").append(T->display(sort));
         }
@@ -82,11 +112,9 @@ string TeamManager::display(int nDefined, unsigned n, int eDefined, const char &
         for (i = 0; i < n; i++) {
             message.append(" ").append(_equipes[i]->display(sort));
         }
-        if (eDefined) {
-            while (i < _equipes.size() && _equipes[n - 1]->get(sort) == _equipes[i]->get(sort)) {
-                message.append(" ").append(_equipes[i]->display(sort));
-                i++;
-            }
+        while (i < _equipes.size() && _equipes[n - 1]->get(sort) == _equipes[i]->get(sort)) {
+            message.append(" ").append(_equipes[i]->display(sort));
+            i++;
         }
     }
     message.append("\n");

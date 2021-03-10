@@ -1,3 +1,4 @@
+#include <algorithm>
 #include "PlayerManager.h"
 
 using namespace std;
@@ -30,13 +31,21 @@ void PlayerManager::_sort(const char &type) {
     switch (type) {
         case 'b':
             sort(_player.begin(), _player.end(), [](Player *P, Player *P2) {
-                return P->get_goals() > P2->get_goals();
+                if (P->get_goals() == P2->get_goals()) {
+                    return P->get_name() < P2->get_name();
+                } else {
+                    return P->get_goals() > P2->get_goals();
+                }
             });
             break;
         case 'm':
             TeamManager::getInstance()->update_players();
             sort(_player.begin(), _player.end(), [](Player *P, Player *P2) {
-                return P->goalAverage() > P2->goalAverage();
+                if (P->goalAverage() == P2->goalAverage()) {
+                    return P->get_name() < P2->get_name();
+                } else {
+                    return P->goalAverage() > P2->goalAverage();
+                }
             });
             break;
         default:
@@ -47,11 +56,11 @@ void PlayerManager::_sort(const char &type) {
     }
 }
 
-string PlayerManager::display(int nDefined, unsigned n, int jDefined, char sort) {
+string PlayerManager::display(unsigned n, char sort) {
     string message;
     _sort(sort);
     message.append("Liste des joueurs :\n");
-    if (nDefined == 0 || n > _player.size()) {
+    if (n > _player.size()) {
         for (Player *p : _player) {
             if (!CSC(p->get_name())) {
                 message.append("\n").append(p->display(sort));
@@ -64,13 +73,11 @@ string PlayerManager::display(int nDefined, unsigned n, int jDefined, char sort)
                 message.append("\n").append(_player[i]->display(sort));
             }
         }
-        if (jDefined) {
-            while (i < _player.size() && _player[n - 1]->get(sort) == _player[i]->get(sort)) {
-                if (!CSC(_player[i]->get_name())) {
-                    message.append("\n").append(_player[i]->display(sort));
-                }
-                i++;
+        while (i < _player.size() && _player[n - 1]->get(sort) == _player[i]->get(sort)) {
+            if (!CSC(_player[i]->get_name())) {
+                message.append("\n").append(_player[i]->display(sort));
             }
+            i++;
         }
     }
     message.append("\n");
@@ -87,7 +94,6 @@ bool PlayerManager::exist(const string &name) const {
 }
 
 Player *PlayerManager::get_player(const string &name, const string &team) const {
-
     if (exist(name) && !CSC(name)) {
         for (Player *player : _player) {
             if (player->get_name() == name) {

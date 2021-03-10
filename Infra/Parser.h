@@ -14,6 +14,8 @@ class Parser {
 private:
     Parser() = default;
 
+    static bool empty_depository(DIR *dirp);
+
     static Day parseDay(const string &filename);
 
     static Match parseMatch(const string &toParse, const int &i);

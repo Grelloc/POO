@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include <utility>
+#include <string>
 
 using namespace std;
 
@@ -49,12 +50,12 @@ string Player::displayAv() const {
 
 
 string Player::display(const char &sort) const {
-    string message(get_name() + " (" + get_team() + ")\n\t\t\t\t\t\t");
+    string message(get_name() + " (" + get_team() + ")\n\t\t\t\t\t\t\t");
     switch (sort) {
         case 'b':
-            return message.append(to_string(get_goals())).append(" Buts");
+            return message.append(to_string(get_goals())).append(" buts");
         case 'm':
-            return message.append(displayAv()).append(" Buts/Match");
+            return message.append(displayAv()).append(" buts/match");
         default :
             throw string("Error, this shouldn't have happened\n");
     }

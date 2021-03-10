@@ -1,42 +1,33 @@
+#include <string>
+
 #ifndef Player_h
 #define Player_h
 
-#include <unistd.h>
-#include <cstdio>
-#include <iostream>
-#include <cassert>
-#include <string>
-#include <vector>
-#include <algorithm>
-
-using namespace std;
-
-
 class Player {
 private:
-    string _name;
-    string _team;
+    std::string _name;
+    std::string _team;
     int _goals;
     int _match;
 
 public :
-    Player(string name, string team);
+    Player(std::string name, std::string team);
 
     void aMarque();
 
     void havePlayed(const int &n);
 
-    string get_team() const;
+    std::string get_team() const;
 
     int get_goals() const;
 
     int goalAverage() const;
 
-    string get_name() const;
+    std::string get_name() const;
 
-    string displayAv() const;
+    std::string displayAv() const;
 
-    string display(const char &sort) const;
+    std::string display(const char &sort) const;
 
     double get(const char &sort) const;
 };

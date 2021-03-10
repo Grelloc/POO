@@ -1,5 +1,9 @@
 #include "Team.h"
 
+#include <string>
+
+using namespace std;
+
 Team::Team(const string &name) : _name(name) {
     _victoires = 0;
     _defaites = 0;
@@ -53,7 +57,8 @@ void Team::update_players() {
 }
 
 string Team::display(const char &sort) const {
-    string message(getname() + "\n\t\t\t\t\t\t");
+    string message(getname() + setSpace(10));
+
     switch (sort) {
         case 'p':
             message.append(to_string(points())).append(" points\n");
@@ -83,6 +88,14 @@ string Team::display(const char &sort) const {
     return message;
 }
 
+string Team::setSpace(int n) const {
+    string message;
+    for (unsigned i = 0; i < n - ((getname().length() - 3) / 4); i++) {
+        message.append("\t");
+    }
+    return message;
+}
+
 int Team::get(const char &sort) const {
     switch (sort) {
         case 'p':
@@ -102,7 +115,7 @@ int Team::get(const char &sort) const {
         default:
             break;
     }
-    return 1;
+    throw string("bad use of Team::get() function");
 }
 
 bool Team::exist(const string &name) const {
